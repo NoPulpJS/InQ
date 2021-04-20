@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node server/server.js",
     "build": "webpack",
-    "dev": "NODE_ENV=development webpack serve --hot --content-base ./ & nodemon server/server.js"
+    "dev": "NODE_ENV=development webpack serve --open --hot --content-base ./ & nodemon server/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "jest": "^26.6.3",
     "pg": "^8.6.0",
     "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-router": "^5.2.0"
   },
   "devDependencies": {
