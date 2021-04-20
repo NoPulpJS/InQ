@@ -10,8 +10,6 @@ module.exports = {
   devServer: {
     publicPath: '/build/',
     port: 8080,
-    hot: true,
-    inline: true,
     contentBase: path.resolve(__dirname, 'build'),
     proxy: {
       // /api/ works as well
