@@ -1,4 +1,5 @@
 const path = require('path');
+
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: './client/index.js',
@@ -8,14 +9,17 @@ module.exports = {
   },
   devServer: {
     publicPath: '/build/',
+    port: 8080,
+    hot: true,
+    inline: true,
     contentBase: path.resolve(__dirname, 'build'),
     proxy: {
       // /api/ works as well
-      '/': 'http://localhost:3000'
-    }
+      '/': 'http://localhost:3000',
+    },
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss', '.gif', '.png', '.jpg', '.jpeg', '.svg']
+    extensions: ['.js', '.jsx', '.scss', '.gif', '.png', '.jpg', '.jpeg', '.svg'],
   },
   module: {
     rules: [
@@ -25,9 +29,9 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
         test: /\.(png|jpe?g|jpg|gif)$/i,
@@ -37,21 +41,6 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /.(css|scss)$/,
-        exclude: [/node_modules/, /client\/stylesheets\/modules/],
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader?modules',
-        include: /flexboxgrid/
-      }
     ],
-  }
+  },
 };
-
-
-
-
-
