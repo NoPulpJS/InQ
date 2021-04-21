@@ -31,8 +31,9 @@ app.use('/login', loginRouter.router);
 
 app.get('/profile',
   authenticationController.checkUserLoggedIn,
-  (req, res) => res.status(200).send(`<img src='${req.user.photos[0].value}'></img>`));
+  (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')))
 
+// app.post('/getGoogleInfo', sendGoogleInfoController)
 app.get('/logout', (req, res) => {
   req.session = null;
   req.logout();
