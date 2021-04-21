@@ -1,0 +1,9 @@
+INSERT INTO users (name, photo_url) VALUES ('kushal', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('greg', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('dwayne', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('brian', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('yule', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('monty', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('ursala', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('ingrid', 'image.google');
+INSERT INTO users (name, photo_url) VALUES ('ausar', 'image.google');
