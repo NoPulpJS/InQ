@@ -9,6 +9,8 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- add email to user details?
+
 CREATE TABLE public.users (
   "_id" serial,
   "name" varchar NOT NULL,
