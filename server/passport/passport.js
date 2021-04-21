@@ -3,14 +3,29 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const db = require('../data/models');
 
 passport.serializeUser((user, done) => {
-  // console.log('inside SERIALIZER: ', user)
+  console.log('inside SERIALIZER: ')
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  // console.log('inside DEserializer: ', user)
-  done(null, user);
+
+  const { displayName, email, photos } = user;
+
+  const findQuery = { 
+    text: 'SELECT * FROM users WHERE email = $1', 
+    values: [email],
+  };
+  db.query(findQuery).then((data) => { 
+    
+    // console.log('inside db.query findQuery: ', data) 
+    if (data.rows.length) { 
+      // console.log('data.rows: ', data.rows)
+      const user = data.rows[0]
+      return done(null, user)
+    }
+}).catch(e => console.error(e));
 });
+
 
 passport.use(new GoogleStrategy({
   clientID: process.env.CLIENT_ID,
@@ -19,10 +34,10 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 ((request, accessToken, refreshToken, profile, done) => {
-  // console.log(profile);
+  console.log('STRATEGY____________');
   const { displayName, email, photos } = profile;
   const findQuery = { 
-    text: 'SELECT * FROM users WHERE email = $1 LIMIT 1', 
+    text: 'SELECT * FROM users WHERE email = $1', 
     values: [email],
   };
 
@@ -35,10 +50,13 @@ passport.use(new GoogleStrategy({
   db.query(findQuery).then((data) => { 
     // console.log('inside db.query findQuery: ', data) 
     if (data.rows.length) { 
+      const id = data.rows[0]._id;
+      console.log('findQuery: ===============', id)
       // console.log('data.rows: ', data.rows)
-      return done(null, profile, accessToken)
+      return done(null, profile, accessToken, id)
     } else {
       db.query(insertQuery).then((insertData) => {
+        console.log('insertQuery++++++++++++++++')
         // console.log('inside db.query insertQuery: ', insertData);
         return done(null, profile, accessToken)
       }).catch(e => console.error(e))
