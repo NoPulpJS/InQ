@@ -17,6 +17,7 @@ app.use(cookieParser());
 const loginRouter = require('./routes/login');
 // controllers
 const authenticationController = (require('./controllers/authenticationController.js'));
+const infoController = require('./controllers/infoController.js');
 
 app.use(cookieSession({
   name: 'session-name',
@@ -33,7 +34,11 @@ app.get('/profile',
   authenticationController.checkUserLoggedIn,
   (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')))
 
-// app.post('/getGoogleInfo', sendGoogleInfoController)
+app.get('/getUserInfo', 
+  infoController.getUserInfo,
+  (req, res) => res.status(200).json(res.locals.userInfo)
+);
+
 app.get('/logout', (req, res) => {
   req.session = null;
   req.logout();

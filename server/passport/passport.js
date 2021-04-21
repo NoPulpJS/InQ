@@ -19,7 +19,7 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 ((request, accessToken, refreshToken, profile, done) => {
-  console.log(profile);
+  // console.log(profile);
   const { displayName, email, photos } = profile;
   const findQuery = { 
     text: 'SELECT * FROM users WHERE email = $1 LIMIT 1', 
@@ -33,18 +33,17 @@ passport.use(new GoogleStrategy({
   // checking if user exists in DB: 
   //find a user whose email is the same as teh proflie email
   db.query(findQuery).then((data) => { 
-    console.log('inside db.query findQuery: ', data) 
+    // console.log('inside db.query findQuery: ', data) 
     if (data.rows.length) { 
-      console.log('data.rows: ', data.rows)
+      // console.log('data.rows: ', data.rows)
       return done(null, profile, accessToken)
     } else {
       db.query(insertQuery).then((insertData) => {
-        console.log('inside db.query insertQuery: ', insertData);
+        // console.log('inside db.query insertQuery: ', insertData);
         return done(null, profile, accessToken)
-      })
+      }).catch(e => console.error(e))
     };
-  }).catch(e=> {})
-  // if user does not exist: create user and insert into DB
-
-  // done(null, profile, accessToken);
+  }).catch( e => {
+    console.error(e)
+  })
 })));
