@@ -5,11 +5,15 @@ import {
 import DrawerLeft from './components/PersistentDrawer';
 
 import SearchContainer from './components/MainContainer';
+import Login from './components/Login'
 
 class App extends Component {
   render() {
     return (
-      <DrawerLeft />
+      <>
+      {/* <DrawerLeft /> */}
+      <Login />
+      </>
     );
   }
 }

@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import Typed from 'react-typed';
 import {
   Switch, Route, Router, Link, useLocation,
 } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 function Login(props) {
-  const oAuthURL = '';
+  const oAuthURL = '/login/OAuth/';
 
   return (
+
     <div className="oAuth">
-      <a href={`${oAuthURL}`} />
+      <a href={`${oAuthURL}`}>
+      <Button variant="contained">Login</Button>
+     </a>
     </div>
   );
 }
