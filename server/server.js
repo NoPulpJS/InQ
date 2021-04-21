@@ -15,8 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // routes
 const loginRouter = require('./routes/login');
+const questionsRouter = require('./routes/questions');
 // controllers
 const authenticationController = (require('./controllers/authenticationController.js'));
+const infoController = require('./controllers/infoController.js');
 
 app.use(cookieSession({
   name: 'session-name',
@@ -28,12 +30,16 @@ app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, '../client/')));
 app.use('/login', loginRouter.router);
-
+app.use('/questions', questionsRouter.router);
 app.get('/profile',
   authenticationController.checkUserLoggedIn,
   (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')))
 
-// app.post('/getGoogleInfo', sendGoogleInfoController)
+app.get('/getUserInfo', 
+  infoController.getUserInfo,
+  (req, res) => res.status(200).json(res.locals.userInfo)
+);
+
 app.get('/logout', (req, res) => {
   req.session = null;
   req.logout();

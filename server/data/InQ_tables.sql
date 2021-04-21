@@ -15,6 +15,7 @@ CREATE TABLE public.users (
   "_id" serial,
   "name" varchar NOT NULL,
   "photo_url" varchar,
+  "email" varchar,
   CONSTRAINT "users_pk" PRIMARY KEY ("_id")
 );
 
