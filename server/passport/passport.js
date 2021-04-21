@@ -3,12 +3,12 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const db = require('../data/models');
 
 passport.serializeUser((user, done) => {
-  console.log('inside SERIALIZER: ', user)
+  // console.log('inside SERIALIZER: ', user)
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('inside DEserializer: ', user)
+  // console.log('inside DEserializer: ', user)
   done(null, user);
 });
 
@@ -22,19 +22,20 @@ passport.use(new GoogleStrategy({
   console.log(profile);
   const { displayName, email, photos } = profile;
   const findQuery = { 
-    text: 'SELECT * FROM users WHERE email = $1', 
+    text: 'SELECT * FROM users WHERE email = $1 LIMIT 1', 
     values: [email],
   };
 
   const insertQuery = { 
-    text: 'INSERT INTO users (name, photo_url, email) VALUES ($1, $2, $3) RETURNING * WHERE email = $3',
+    text: 'INSERT INTO users (name, photo_url, email) VALUES ($1, $2, $3)',
     values: [displayName, photos[0].value, email],
   };
   // checking if user exists in DB: 
   //find a user whose email is the same as teh proflie email
   db.query(findQuery).then((data) => { 
     console.log('inside db.query findQuery: ', data) 
-    if (data.length) { 
+    if (data.rows.length) { 
+      console.log('data.rows: ', data.rows)
       return done(null, profile, accessToken)
     } else {
       db.query(insertQuery).then((insertData) => {
@@ -45,5 +46,5 @@ passport.use(new GoogleStrategy({
   }).catch(e=> {})
   // if user does not exist: create user and insert into DB
 
-  done(null, profile, accessToken);
+  // done(null, profile, accessToken);
 })));
