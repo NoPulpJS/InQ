@@ -92,13 +92,13 @@ export default function PermanentDrawerLeft() {
             <ListItemText primary="Message Board" />
           </ListItem>
 
-          <ListItem button key="RequestedMaterial">
+          <ListItem button key="Favorites">
             <ListItemIcon>
               <Badge color="secondary" badgeContent={0} showZero>
                 <MailIcon />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary="RequestedMaterial" />
+            <ListItemText primary="Favorites" />
           </ListItem>
 
           <ListItem button key="SearchQuestions">
