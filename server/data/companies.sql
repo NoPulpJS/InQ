@@ -15,4 +15,4 @@ INSERT INTO companies (Company) VALUES ('TikTok');
 INSERT INTO companies (Company) VALUES ('Square');
 INSERT INTO companies (Company) VALUES ('LinkedIn');
 INSERT INTO companies (Company) VALUES ('Samsung');
-;INSERT INTO companies (Company) VALUES ('Intel');
+INSERT INTO companies (Company) VALUES ('Intel');
