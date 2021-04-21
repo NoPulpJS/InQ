@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-require('../passport/passport.js')
+require('../passport/passport.js');
 
 const router = express.Router();
 
@@ -14,8 +14,6 @@ router.get('/OAuth/callback/',
   passport.authenticate('google', {
     failureRedirect: '/auth/google/failure',
   }),
-  (req, res) => {
-    return res.redirect('/profile')
-  });
+  (req, res) => res.redirect('/profile'));
 
 module.exports = { router };
