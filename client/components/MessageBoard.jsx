@@ -9,12 +9,16 @@ import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
-import * as StyleFactoy from './StyleFactory';
+import {
+  useStylesMessage,
+  useStylesButton,
+  useStylesText,
+} from './StyleFactory';
 
 export default function MessageBoard() {
-  const messageClasses = StyleFactoy.useStylesMessage();
-  const buttonClasses = StyleFactoy.useStylesButton();
-  const textClasses = StyleFactoy.useStylesText();
+  const messageClasses = useStylesMessage();
+  const buttonClasses = useStylesButton();
+  const textClasses = useStylesText();
 
   return (
     <div>

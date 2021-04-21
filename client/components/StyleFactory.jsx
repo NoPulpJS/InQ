@@ -31,7 +31,7 @@ const useStylesText = makeStyles((theme) => ({
   },
 }));
 
-module.exports = {
+export {
   useStylesMessage,
   useStylesButton,
   useStylesText,
