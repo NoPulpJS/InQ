@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch, Route, Link,
 } from 'react-router-dom';
+import Quote from 'inspirational-quotes';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -68,6 +69,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     alignContent: 'center',
   },
+  avatar: {
+    height: '30vh',
+    width: '30vh',
+  },
+  main: {
+    display: 'flex',
+    flexDIrection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
 }));
 
@@ -89,10 +100,12 @@ export default function PermanentDrawerLeft() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
+            <Avatar alt={user.name} src={user.photo} className={classes.large} />
             <Typography variant="h6" noWrap>
               {`Welcome back ${user.name}`}
-              <Avatar alt={user.name} src={user.photo} className={classes.large} />
+
             </Typography>
+
           </Toolbar>
         </AppBar>
         <Drawer
@@ -106,7 +119,7 @@ export default function PermanentDrawerLeft() {
           <div className={classes.toolbar} />
           <Divider />
           <List>
-            <ListItem button key="Home">
+            <ListItem button key="Home" component={Link} to="/profile/">
               <ListItemIcon>
                 <HomeOutlined />
               </ListItemIcon>
@@ -148,6 +161,15 @@ export default function PermanentDrawerLeft() {
         </Drawer>
         <Container className={classes.container}>
           <Switch>
+
+            <Route exact path="/profile">
+              <Container className={classes.main}>
+                <Avatar alt={user.name} src={user.photo} className={classes.avatar} />
+                <Typography variant="subtitle1" align="right">
+                  {Quote.getRandomQuote()}
+                </Typography>
+              </Container>
+            </Route>
             <Route exact path="/submit">
               <SubmitQuestion user={user} />
             </Route>

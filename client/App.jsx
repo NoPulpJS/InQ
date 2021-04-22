@@ -18,7 +18,7 @@ class App extends Component {
           <Route exact path="/">
             <Login />
           </Route>
-          <Route exact path="/profile">
+          <Route exact path="/profile/">
             <MainContainer />
           </Route>
         </Switch>

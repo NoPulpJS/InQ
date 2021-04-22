@@ -28,6 +28,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fontsource-roboto": "^4.0.0",
+    "inspirational-quotes": "^1.0.8",
     "jest": "^26.6.3",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",

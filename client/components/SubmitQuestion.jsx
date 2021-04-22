@@ -12,6 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
+import Container from '@material-ui/core/Container';
 import { useStylesCatagories } from './StyleFactory';
 
 const useStyles = makeStyles((theme) => ({
@@ -106,6 +107,8 @@ export default function SubmitQuestions(props) {
   const classes = useStyles();
 
   const submitQuestion = () => {
+    if (!question.length || !checkedCategory.length || !company.length) return;
+
     const info = {
       question,
       categories: checkedCategory,
@@ -121,6 +124,11 @@ export default function SubmitQuestions(props) {
         body: JSON.stringify(info),
       })
       .then((data) => data.json())
+      .then(() => {
+        setCheckedCategory([]);
+        setQuestion('');
+        setCompany('');
+      })
       .catch((e) => {
         console.log(e);
       });
@@ -128,44 +136,45 @@ export default function SubmitQuestions(props) {
 
   return (
     <>
-      <form className={classes.root}>
-        <div>
-          <Grid container spacing={1} alignItems="flex-end">
-            <Grid item>
-              <BusinessIcon />
-            </Grid>
-            <Grid item>
-              <TextField
-                onChange={(e) => {
-                  setCompany(e.target.value);
-                }}
-                label="Enter Company"
-                id="companyName"
-                className={classes.textFieldCompany}
-              />
-            </Grid>
-          </Grid>
-        </div>
-        <div>
+      <Container>
+        <form className={classes.root}>
           <div>
             <Grid container spacing={1} alignItems="flex-end">
               <Grid item>
-                <HelpIcon />
+                <BusinessIcon />
               </Grid>
               <Grid item>
                 <TextField
-                  label="Enter Question"
-                  id="companyName"
-                  className={classes.textFieldQuestion}
-                  multiline
-                  fullWidth
-                  variant="filled"
-                  rows="14"
                   onChange={(e) => {
-                    setQuestion(e.target.value);
+                    setCompany(e.target.value);
                   }}
+                  label="Enter Company"
+                  id="companyName"
+                  className={classes.textFieldCompany}
                 />
-                {/* <Grid container spacing={1} alignItems="flex-end">
+              </Grid>
+            </Grid>
+          </div>
+          <div>
+            <div>
+              <Grid container spacing={1} alignItems="flex-end">
+                <Grid item>
+                  <HelpIcon />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    label="Enter Question"
+                    id="companyName"
+                    className={classes.textFieldQuestion}
+                    multiline
+                    fullWidth
+                    variant="filled"
+                    rows="14"
+                    onChange={(e) => {
+                      setQuestion(e.target.value);
+                    }}
+                  />
+                  {/* <Grid container spacing={1} alignItems="flex-end">
           <Grid item>
             <HelpIcon />
           </Grid>
@@ -183,16 +192,16 @@ export default function SubmitQuestions(props) {
               }}
               variant="filled"
             /> */}
-                <Button variant="contained" color="secondary" onClick={submitQuestion}>
-                  Submit
-                </Button>
+                  <Button variant="contained" color="secondary" onClick={submitQuestion}>
+                    Submit
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
+            </div>
           </div>
-        </div>
-        <List className={catagoryClasses.root}>{categoryRendered}</List>
-      </form>
-
+          <List className={catagoryClasses.root}>{categoryRendered}</List>
+        </form>
+      </Container>
     </>
   );
 }
