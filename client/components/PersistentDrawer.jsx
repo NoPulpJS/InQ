@@ -24,7 +24,7 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import SubmitQuestions from './SubmitQuestions';
+import SubmitQuestion from './SubmitQuestions';
 
 const drawerWidth = 240;
 
@@ -56,78 +56,82 @@ export default function PermanentDrawerLeft() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Welcome Back
-            <Avatar alt="Dw" src="https://i.ibb.co/2KXmCTw/Screenshot-from-2021-04-14-13-27-11.png" className={classes.large} />
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
-        <div className={classes.toolbar} />
-        <Divider />
-        <List>
+    <Router>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" noWrap>
+              Welcome Back
+              <Avatar alt="Dw" src="https://i.ibb.co/2KXmCTw/Screenshot-from-2021-04-14-13-27-11.png" className={classes.large} />
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          anchor="left"
+        >
+          <div className={classes.toolbar} />
+          <Divider />
+          <List>
 
-          <ListItem button key="Home">
-            <ListItemIcon>
-              <HomeOutlined />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
+            <ListItem button key="Home">
+              <ListItemIcon>
+                <HomeOutlined />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
 
-          <ListItem button key="SubmitQuestion" component={Link} to="/submit">
-            <ListItemIcon>
-              <Publish />
-            </ListItemIcon>
-            <ListItemText primary="Submit Qestion" />
-          </ListItem>
+            <ListItem button key="SubmitQuestion" component={Link} to="/submit">
+              <ListItemIcon>
+                <Publish />
+              </ListItemIcon>
+              <ListItemText primary="Submit Qestion" />
+            </ListItem>
 
-          <ListItem button key="MessageBoard">
-            <ListItemIcon>
-              <FormatListBulleted />
-            </ListItemIcon>
-            <ListItemText primary="Message Board" />
-          </ListItem>
+            <ListItem button key="MessageBoard">
+              <ListItemIcon>
+                <FormatListBulleted />
+              </ListItemIcon>
+              <ListItemText primary="Message Board" />
+            </ListItem>
 
-          <ListItem button key="Favorites">
-            <ListItemIcon>
-              <Badge color="secondary" badgeContent={0} showZero>
-                <MailIcon />
-              </Badge>
-            </ListItemIcon>
-            <ListItemText primary="Favorites" />
-          </ListItem>
+            <ListItem button key="Favorites">
+              <ListItemIcon>
+                <Badge color="secondary" badgeContent={0} showZero>
+                  <MailIcon />
+                </Badge>
+              </ListItemIcon>
+              <ListItemText primary="Favorites" />
+            </ListItem>
 
-          <ListItem button key="SearchQuestions">
-            <ListItemIcon>
-              <Fab size="large" color="primary" aria-label="search">
-                <SearchRoundedIcon />
-              </Fab>
-            </ListItemIcon>
-            <ListItemText primary="Search Questions" />
-          </ListItem>
-        </List>
-      </Drawer>
-      <Switch>
-        <Route exact path="/submit">
-          <SubmitQuestions />
-        </Route>
-      </Switch>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph />
-        <Typography paragraph />
-      </main>
-    </div>
+            <ListItem button key="SearchQuestions">
+              <ListItemIcon>
+                <Fab size="large" color="primary" aria-label="search">
+                  <SearchRoundedIcon />
+                </Fab>
+              </ListItemIcon>
+              <ListItemText primary="Search Questions" />
+            </ListItem>
+          </List>
+        </Drawer>
+
+        <Switch>
+          <Route exact path="/submit">
+            <SubmitQuestion />
+          </Route>
+        </Switch>
+
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Typography paragraph />
+          <Typography paragraph />
+        </main>
+      </div>
+    </Router>
   );
 }
