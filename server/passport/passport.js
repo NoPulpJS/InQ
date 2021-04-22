@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const db = require('../data/models');
 
 passport.serializeUser((user, done) => {
-  console.log('inside SERIALIZER: ');
+  // console.log('inside SERIALIZER: ');
   done(null, user);
 });
 
@@ -31,7 +31,7 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 ((request, accessToken, refreshToken, profile, done) => {
-  console.log('STRATEGY____________');
+  // console.log('STRATEGY____________');
   const { displayName, email, photos } = profile;
   const findQuery = {
     text: 'SELECT * FROM users WHERE email = $1',
@@ -48,12 +48,12 @@ passport.use(new GoogleStrategy({
     // console.log('inside db.query findQuery: ', data)
     if (data.rows.length) {
       const id = data.rows[0]._id;
-      console.log('findQuery: ===============', id);
+      // console.log('findQuery: ===============', id);
       // console.log('data.rows: ', data.rows)
       return done(null, profile, accessToken, id);
     }
     db.query(insertQuery).then((insertData) => {
-      console.log('insertQuery++++++++++++++++');
+      // console.log('insertQuery++++++++++++++++');
       // console.log('inside db.query insertQuery: ', insertData);
       return done(null, profile, accessToken);
     }).catch((e) => console.error(e));

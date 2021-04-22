@@ -16,7 +16,7 @@ module.exports = {
 
     db.query(insertQuestion)
       .then((data) => {
-        console.log('insertQuestion: ', data.rows[0]._id);
+        // console.log('insertQuestion: ', data.rows[0]._id);
         res.locals.question_id = data.rows[0]._id;
         return next();
         // keep store of question of res.local
@@ -42,7 +42,7 @@ module.exports = {
 
     Promise.all(arrayOfCategories)
       .then((data) => {
-        console.log('arrayofCategories: ', data);
+        // console.log('arrayofCategories: ', data);
       })
       .then((data) => next())
       .catch((e) => next({
@@ -66,7 +66,7 @@ module.exports = {
 
     Promise.all(arrayOfCompanies)
       .then((data) => {
-        console.log('arrayOfCompanies', data);
+        // console.log('arrayOfCompanies', data);
       })
       .then((data) => next())
       .catch((e) => next({
