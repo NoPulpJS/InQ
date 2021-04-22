@@ -4,8 +4,6 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const dotenv = require('dotenv');
-const chalk = require('chalk');
-const db = require('./data/models');
 
 dotenv.config();
 
@@ -21,7 +19,6 @@ const questionsRouter = require('./routes/questions');
 // controllers
 const authenticationController = require('./controllers/authenticationController.js');
 const infoController = require('./controllers/infoController.js');
-const { categories } = require('./controllers/questionsController');
 
 app.use(
   cookieSession({
@@ -32,7 +29,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use('/assets', express.static(path.resolve(__dirname, '../client/components/assets/')));
 app.use(express.static(path.join(__dirname, '../client/')));
 app.use('/login', loginRouter.router);
 app.use('/questions', questionsRouter.router);
@@ -43,14 +40,13 @@ app.get('/getCategories', infoController.getCategories);
 app.get('/getCompanies', infoController.getCompanies);
 app.post('/getQuestions', infoController.getQuestions, infoController.retrieveQuestions);
 
-
 app.get('/logout', (req, res) => {
   req.session = null;
   req.logout();
   return res.redirect('/');
 });
 
-//app.post('/Messages', infoController.postMessageBoard, (req, res) => console.log('end of chain'));
+// app.post('/Messages', infoController.postMessageBoard, (req, res) => console.log('end of chain'));
 
 app.use('/*', authenticationController.checkUserLoggedIn, (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 app.use('*', (req, res) => {

@@ -59,19 +59,19 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     alignContent: 'center',
     height: '100vh',
- 
+
   },
   container: {
     paddingTop: '10vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent: 'center'
-  }
+    alignContent: 'center',
+  },
 
 }));
 
-export default function PermanentDrawerLeft(props) {
+export default function PermanentDrawerLeft() {
   const [user, setUser] = useState({});
   const classes = useStyles();
 
@@ -112,28 +112,28 @@ export default function PermanentDrawerLeft(props) {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button key="MessageBoard" component={Link} to="/MessageBoard">
+            {/* <ListItem button key="MessageBoard" component={Link} to="/MessageBoard">
               <ListItemIcon>
                 <FormatListBulleted />
               </ListItemIcon>
               <ListItemText primary="Message Board" />
-            </ListItem>
+            </ListItem> */}
 
-            <ListItem button key="Favorites">
+            {/* <ListItem button key="Favorites">
               <ListItemIcon>
                 <Badge color="secondary" badgeContent={0} showZero>
                   <MailIcon />
                 </Badge>
               </ListItemIcon>
               <ListItemText primary="Favorites" />
-            </ListItem>
+            </ListItem> */}
 
-          <ListItem button key="SubmitQuestion" component={Link} to="/submit">
-            <ListItemIcon>
-              <Publish />
-            </ListItemIcon>
-            <ListItemText primary="Submit Question" />
-          </ListItem>
+            <ListItem button key="SubmitQuestion" component={Link} to="/submit">
+              <ListItemIcon>
+                <Publish />
+              </ListItemIcon>
+              <ListItemText primary="Submit Question" />
+            </ListItem>
 
             <ListItem button key="SearchQuestions" component={Link} to="/checklist">
               <ListItemIcon>
@@ -149,7 +149,7 @@ export default function PermanentDrawerLeft(props) {
         <Container className={classes.container}>
           <Switch>
             <Route exact path="/submit">
-              <SubmitQuestion />
+              <SubmitQuestion user={user} />
             </Route>
 
             {/* <Route exact path="/MessageBoard">

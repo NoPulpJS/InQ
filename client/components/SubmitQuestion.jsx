@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'column',
-    justifyContent: 'center'
-    
+    justifyContent: 'center',
+
   },
   textFieldCompany: {
     marginLeft: theme.spacing(1),
@@ -33,20 +33,18 @@ const useStyles = makeStyles((theme) => ({
     width: '100ch',
   },
   buttonStyle: {
-   
-  }
+
+  },
 
 }));
 
-
-export default function SubmitQuestions() {
+export default function SubmitQuestions(props) {
   const catagoryClasses = useStylesCatagories();
 
   const [categories, setCategories] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [questions, setQuestion] = useState('');
+  const [company, setCompany] = useState('');
+  const [question, setQuestion] = useState('');
   const [checkedCategory, setCheckedCategory] = useState([]);
-  const [checkedCompany, setCheckedCompany] = useState([]);
 
   useEffect(() => {
     fetch('/getCategories')
@@ -65,12 +63,6 @@ export default function SubmitQuestions() {
       });
   }, []);
 
-  
-
-
-
-
-
   const handleToggleCategory = (value) => () => {
     const currentIndex = checkedCategory.indexOf(value);
     const newChecked = [...checkedCategory];
@@ -85,10 +77,6 @@ export default function SubmitQuestions() {
   };
   // array passed into map should be changed
   // ListItemText primary prop needs to change
-
-
-  
-
 
   const categoryRendered = categories.map((value, i) => {
     const labelId = `checkbox-list-label-${value.category}`;
@@ -115,90 +103,69 @@ export default function SubmitQuestions() {
     );
   });
 
-
-
-  const handleToggleCompany = (value) => () => {
-    const currentIndex = checkedCompany.indexOf(value);
-    const newChecked = [...checkedCompany];
-    if (checkedCompany.length === 1) {return;}
-    else {
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setCheckedCompany(newChecked);
-  }
-  };
-
-
-  
-  const companyRendered = companies.map((value, i) => {
-    const labelId = `checkbox-list-label-${value.category}`;
-
-    return (
-      <ListItem
-        key={`${value.company}${i}`}
-        role={undefined}
-        dense
-        button
-        onClick={handleToggleCompany(value._id)}
-      >
-        <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={checkedCompany.indexOf(value._id) !== -1}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ 'aria-labelledby': labelId }}
-          />
-        </ListItemIcon>
-        <ListItemText id={labelId} primary={value.company} />
-      </ListItem>
-    );
-  });
-
   const classes = useStyles();
+
+  const submitQuestion = () => {
+    const info = {
+      question,
+      categories: checkedCategory,
+      company,
+      _id: props.user._id,
+    };
+    fetch('/questions/submit',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(info),
+      })
+      .then((data) => data.json())
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <>
-    <form className={classes.root}>
-      <div>
-        <Grid container spacing={1} alignItems="flex-end">
-          <Grid item>
-            <BusinessIcon />
+      <form className={classes.root}>
+        <div>
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item>
+              <BusinessIcon />
+            </Grid>
+            <Grid item>
+              <TextField
+                onChange={(e) => {
+                  setCompany(e.target.value);
+                }}
+                label="Enter Company"
+                id="companyName"
+                className={classes.textFieldCompany}
+              />
+            </Grid>
           </Grid>
-          <Grid item>
-            <TextField
-              label="Enter Company"
-              id="companyName"
-              className={classes.textFieldCompany}
-            />
-          </Grid>
-        </Grid>
-      </div>
-      <div>
-      <div>
-        <Grid container spacing={1} alignItems="flex-end">
-          <Grid item>
-            <HelpIcon />
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Enter Question"
-              id="companyName"
-              className={classes.textFieldQuestion}
-              multiline
-              fullWidth
-              variant="filled"
-              rows='14'
-              onChange={e => {
-                setQuestion(event.target.value)
-              }}
-             
-            />
-        {/* <Grid container spacing={1} alignItems="flex-end">
+        </div>
+        <div>
+          <div>
+            <Grid container spacing={1} alignItems="flex-end">
+              <Grid item>
+                <HelpIcon />
+              </Grid>
+              <Grid item>
+                <TextField
+                  label="Enter Question"
+                  id="companyName"
+                  className={classes.textFieldQuestion}
+                  multiline
+                  fullWidth
+                  variant="filled"
+                  rows="14"
+                  onChange={(e) => {
+                    setQuestion(e.target.value);
+                  }}
+                />
+                {/* <Grid container spacing={1} alignItems="flex-end">
           <Grid item>
             <HelpIcon />
           </Grid>
@@ -216,16 +183,15 @@ export default function SubmitQuestions() {
               }}
               variant="filled"
             /> */}
-            <Button variant="contained" color="secondary">
-            Submit
-          </Button>
-          </Grid>
-        </Grid>
-      </div>
-      </div>
-      <List className={catagoryClasses.root}>{categoryRendered}</List>
-      <List className={catagoryClasses.root}>{companyRendered}</List>
-    </form>
+                <Button variant="contained" color="secondary" onClick={submitQuestion}>
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+        <List className={catagoryClasses.root}>{categoryRendered}</List>
+      </form>
 
     </>
   );
