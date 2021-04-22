@@ -38,12 +38,10 @@ app.use('/login', loginRouter.router);
 app.use('/questions', questionsRouter.router);
 app.get('/profile', authenticationController.checkUserLoggedIn, (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 
-app.get('/getUserInfo', infoController.getUserInfo, (req, res) => res.status(200).json(res.locals.userInfo));
+app.get('/getUserInfo', infoController.getUserInfo);
+app.get('/getCategories', infoController.getCategories);
+app.get('/getCompanies', infoController.getCompanies);
 
-app.get('/getCategories', infoController.getCategories, (req, res) => res.status(200).json(res.locals.categories));
-
-// console.log(chalk.red('CATEGORY QUIRY, SERVER.JS'),
-//   data, chalk.red('END OF Server LOG'));
 
 app.get('/logout', (req, res) => {
   req.session = null;
@@ -53,6 +51,7 @@ app.get('/logout', (req, res) => {
 
 //app.post('/Messages', infoController.postMessageBoard, (req, res) => console.log('end of chain'));
 
+app.use('/*', authenticationController.checkUserLoggedIn, (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 app.use('*', (req, res) => {
   res.status(404).send('Not Found');
 });

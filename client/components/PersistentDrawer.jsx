@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PermanentDrawerLeft() {
+export default function PermanentDrawerLeft(props) {
   const [user, setUser] = useState({});
   const classes = useStyles();
 
@@ -87,7 +87,6 @@ export default function PermanentDrawerLeft() {
           <div className={classes.toolbar} />
           <Divider />
           <List>
-
             <ListItem button key="Home">
               <ListItemIcon>
                 <HomeOutlined />

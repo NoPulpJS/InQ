@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const db = require('../data/models');
 
 module.exports = {
@@ -13,30 +12,34 @@ module.exports = {
       photo: photo_url,
       email,
     };
-    return next();
+    return res.status(200).json(res.locals.userInfo);
+  },
+  
+  getCategories: (req, res, next) => {
+    const query = { text: 'SELECT * FROM categories' };
+    db.query(query)
+      .then((data) => res.status(200).json(data.rows))
+      .catch((e) => {
+        next({
+          message: `Error with /getCategories route: ${e}`,
+          error: e,
+        });
+      });
   },
 
-  getCategories: (req, res, next) => {
-    const query = { text: 'SELECT category  FROM categories' };
+  getCompanies: (req, res, next) => {
+    const query = {
+      text: 'SELECT * FROM companies',
+    };
+
     db.query(query)
-      .then((data) => {
-        res.locals.categories = data.rows;
-        console.log(chalk.red('infocontroler'), res.locals.categories);
-        return next();
-      })
-      .catch((e) => next({
-        message: 'error',
-        error: e,
-      }));
+      .then((data) => res.status(200).json(data.rows))
+      .catch((e) => {
+        next({
+          message: `Error with /getCompanies route: ${e}`,
+          error: e,
+        });
+      });
   },
-  // postMessageBoard: (req, res, next) => {
-  //   console.log(chalk.red('INFOCONTROLLER CONSOLELOG, REQ BODY'), req.body);
-  //   const { message } = req.message;
-  //   res.locals.messageInfo = {
-  //     message,
-  //   };
-  //   console.log(chalk.red('INFOCONTROLLER CONSOLELOG, RES LOCALS MESSAGEINFO'), res.locals.messageInfo);
-  //   return next();
-  // },
 
 };
