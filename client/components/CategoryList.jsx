@@ -85,15 +85,18 @@ export default function CatagoryCheckboxList() {
       <div>
         <Button
         onClick={() => {
-              const val = {checked}
-              console.log('on Click', val.checked[1]);
+              const categoryID = {checked}
               fetch('/getQuestions', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body:  JSON.stringify(val.checked[1]),
-              });
+                body:  JSON.stringify(categoryID.checked[1]),
+              })
+              .then(data => data.json())
+               .then(questions => {
+                 console.log('retrieveQuestions : ',questions);
+               });
             }}
           variant="contained"
           color="primary"
