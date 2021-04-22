@@ -1,5 +1,5 @@
-import React from 'react';
-import {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,97 +53,95 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PermanentDrawerLeft() {
+export default function PermanentDrawerLeft(props) {
   const [user, setUser] = useState({});
   const classes = useStyles();
-  
+
   useEffect(() => {
     fetch('/getUserInfo')
+      .then((info) => info.json())
       .then((info) => {
-        return info.json();
-      })
-      .then((info) => {
-       setUser(info) 
-      })
-  }, [])
+        setUser(info);
+      });
+  }, []);
 
   return (
     <Router>
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            {`Welcome back ${user.name}`}
-            <Avatar alt="Dw" src={user.photo}className={classes.large} />
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
-        <div className={classes.toolbar} />
-        <Divider />
-        <List>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" noWrap>
+              {`Welcome back ${user.name}`}
+              <Avatar alt="Dw" src={user.photo} className={classes.large} />
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          anchor="left"
+        >
+          <div className={classes.toolbar} />
+          <Divider />
+          <List>
 
-          <ListItem button key="Home">
-            <ListItemIcon>
-              <HomeOutlined />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
+            <ListItem button key="Home">
+              <ListItemIcon>
+                <HomeOutlined />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
 
-          <ListItem button key="SubmitQuestion" component={Link} to="/submit">
-            <ListItemIcon>
-              <Publish />
-            </ListItemIcon>
-            <ListItemText primary="Submit Qestion" />
-          </ListItem>
+            <ListItem button key="SubmitQuestion" component={Link} to="/submit">
+              <ListItemIcon>
+                <Publish />
+              </ListItemIcon>
+              <ListItemText primary="Submit Qestion" />
+            </ListItem>
 
-          <ListItem button key="MessageBoard">
-            <ListItemIcon>
-              <FormatListBulleted />
-            </ListItemIcon>
-            <ListItemText primary="Message Board" />
-          </ListItem>
+            <ListItem button key="MessageBoard">
+              <ListItemIcon>
+                <FormatListBulleted />
+              </ListItemIcon>
+              <ListItemText primary="Message Board" />
+            </ListItem>
 
-          <ListItem button key="Favorites">
-            <ListItemIcon>
-              <Badge color="secondary" badgeContent={0} showZero>
-                <MailIcon />
-              </Badge>
-            </ListItemIcon>
-            <ListItemText primary="Favorites" />
-          </ListItem>
+            <ListItem button key="Favorites">
+              <ListItemIcon>
+                <Badge color="secondary" badgeContent={0} showZero>
+                  <MailIcon />
+                </Badge>
+              </ListItemIcon>
+              <ListItemText primary="Favorites" />
+            </ListItem>
 
-          <ListItem button key="SearchQuestions">
-            <ListItemIcon>
-              <Fab size="large" color="primary" aria-label="search">
-                <SearchRoundedIcon />
-              </Fab>
-            </ListItemIcon>
-            <ListItemText primary="Search Questions" />
-          </ListItem>
-        </List>
-      </Drawer>
-      <div>
-      <Switch>
-        <Route exact path="/submit">
-          <SubmitQuestions />
-        </Route>
-      </Switch>
+            <ListItem button key="SearchQuestions">
+              <ListItemIcon>
+                <Fab size="large" color="primary" aria-label="search">
+                  <SearchRoundedIcon />
+                </Fab>
+              </ListItemIcon>
+              <ListItemText primary="Search Questions" />
+            </ListItem>
+          </List>
+        </Drawer>
+        <div>
+          <Switch>
+            <Route path="/submit">
+              <SubmitQuestions />
+            </Route>
+          </Switch>
+        </div>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Typography paragraph />
+          <Typography paragraph />
+        </main>
       </div>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph />
-        <Typography paragraph />
-      </main>
-    </div>
     </Router>
   );
 }
