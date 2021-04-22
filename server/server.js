@@ -33,12 +33,11 @@ app.use('/login', loginRouter.router);
 app.use('/questions', questionsRouter.router);
 app.get('/profile',
   authenticationController.checkUserLoggedIn,
-  (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')))
+  (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 
-app.get('/getUserInfo', 
+app.get('/getUserInfo',
   infoController.getUserInfo,
-  (req, res) => res.status(200).json(res.locals.userInfo)
-);
+  (req, res) => res.status(200).json(res.locals.userInfo));
 
 app.get('/logout', (req, res) => {
   req.session = null;

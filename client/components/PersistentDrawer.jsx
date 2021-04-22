@@ -18,6 +18,13 @@ import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 import Fab from '@material-ui/core/Fab';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from 'react-router-dom';
+import SubmitQuestions from './SubmitQuestions';
 
 const drawerWidth = 240;
 
@@ -78,7 +85,7 @@ export default function PermanentDrawerLeft() {
             <ListItemText primary="Home" />
           </ListItem>
 
-          <ListItem button key="SubmitQuestion">
+          <ListItem button key="SubmitQuestion" component={Link} to="/submit">
             <ListItemIcon>
               <Publish />
             </ListItemIcon>
@@ -92,13 +99,13 @@ export default function PermanentDrawerLeft() {
             <ListItemText primary="Message Board" />
           </ListItem>
 
-          <ListItem button key="RequestedMaterial">
+          <ListItem button key="Favorites">
             <ListItemIcon>
               <Badge color="secondary" badgeContent={0} showZero>
                 <MailIcon />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary="RequestedMaterial" />
+            <ListItemText primary="Favorites" />
           </ListItem>
 
           <ListItem button key="SearchQuestions">
@@ -109,9 +116,13 @@ export default function PermanentDrawerLeft() {
             </ListItemIcon>
             <ListItemText primary="Search Questions" />
           </ListItem>
-
         </List>
       </Drawer>
+      <Switch>
+        <Route exact path="/submit">
+          <SubmitQuestions />
+        </Route>
+      </Switch>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph />
