@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/submit',
   questionsController.submit,
   questionsController.categories,
-  questionsController.companies,
+  // questionsController.companies,
   (req, res) => res.status(200));
 
 module.exports = { router };
