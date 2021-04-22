@@ -15,7 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import Container from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import {
   HomeOutlined, Publish, FormatListBulleted,
@@ -61,6 +61,13 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
  
   },
+  container: {
+    paddingTop: '10vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center'
+  }
 
 }));
 
@@ -105,14 +112,6 @@ export default function PermanentDrawerLeft(props) {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
-
-            <ListItem button key="SubmitQuestion" component={Link} to="/submit">
-              <ListItemIcon>
-                <Publish />
-              </ListItemIcon>
-              <ListItemText primary="Submit Qestion" />
-            </ListItem>
-
             <ListItem button key="MessageBoard" component={Link} to="/MessageBoard">
               <ListItemIcon>
                 <FormatListBulleted />
@@ -135,6 +134,7 @@ export default function PermanentDrawerLeft(props) {
             </ListItemIcon>
             <ListItemText primary="Submit Question" />
           </ListItem>
+
             <ListItem button key="SearchQuestions" component={Link} to="/checklist">
               <ListItemIcon>
                 <Fab size="large" color="primary" aria-label="search">
@@ -146,7 +146,7 @@ export default function PermanentDrawerLeft(props) {
 
           </List>
         </Drawer>
-        <div>
+        <Container className={classes.container}>
           <Switch>
             <Route exact path="/submit">
               <SubmitQuestion />
@@ -160,7 +160,7 @@ export default function PermanentDrawerLeft(props) {
               <CatagoryCheckboxList />
             </Route>
           </Switch>
-        </div>
+        </Container>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph />
