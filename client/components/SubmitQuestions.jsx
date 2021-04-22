@@ -1,10 +1,13 @@
 import React from 'react';
+import {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import BusinessIcon from '@material-ui/icons/Business';
 import HelpIcon from '@material-ui/icons/Help';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +21,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SubmitQuestion() {
+export default function SubmitQuestions() {
+  const [categories, setCategories] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [questions, setQuestion] = useState('');
+
+  useEffect(() => {
+    fetch('/getCategories')
+      .then((categories) => {
+        return categories.json()
+      }) 
+      .then((categories) => {
+          console.log('Categories: ', categories)
+          setCategories(categories);
+      })
+      
+  }, [])
+
+  useEffect(() => {
+    fetch('/getCompanies')
+      .then((companies) => {
+        return companies.json()
+      }) 
+      .then((companies) => {
+          setCompanies(companies);
+      })
+      
+  }, [])
   const classes = useStyles();
 
   return (

@@ -3,6 +3,7 @@ const path = require('path');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const db = require('./data/models');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -19,6 +20,7 @@ const questionsRouter = require('./routes/questions');
 // controllers
 const authenticationController = (require('./controllers/authenticationController.js'));
 const infoController = require('./controllers/infoController.js');
+const { categories } = require('./controllers/questionsController');
 
 app.use(cookieSession({
   name: 'session-name',
@@ -44,6 +46,14 @@ app.get('/logout', (req, res) => {
   req.logout();
   return res.redirect('/');
 });
+
+app.get('/getCategories', (req, res) => {
+  const query = {text: 'SELECT  * FROM categories'}
+  db.query(query)
+    .then((data)=> {
+      return res.status(200).json(data.rows);
+    })
+})
 
 app.use('*', (req, res) => {
   res.status(404).send('Not Found');
