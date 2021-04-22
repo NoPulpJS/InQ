@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,7 +25,7 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import SubmitQuestion from './SubmitQuestions';
+import SubmitQuestions from './SubmitQuestions';
 
 const drawerWidth = 240;
 
@@ -53,7 +54,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PermanentDrawerLeft() {
+  const [user, setUser] = useState({});
   const classes = useStyles();
+
+  useEffect(() => {
+    fetch('/getUserInfo')
+      .then((info) => info.json())
+      .then((info) => {
+        setUser(info);
+      });
+  }, []);
 
   return (
     <Router>
@@ -62,8 +72,8 @@ export default function PermanentDrawerLeft() {
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" noWrap>
-              Welcome Back
-              <Avatar alt="Dw" src="https://i.ibb.co/2KXmCTw/Screenshot-from-2021-04-14-13-27-11.png" className={classes.large} />
+              {`Welcome back ${user.name}`}
+              <Avatar alt="Dw" src={user.photo} className={classes.large} />
             </Typography>
           </Toolbar>
         </AppBar>
@@ -119,13 +129,13 @@ export default function PermanentDrawerLeft() {
             </ListItem>
           </List>
         </Drawer>
-
-        <Switch>
-          <Route exact path="/submit">
-            <SubmitQuestion />
-          </Route>
-        </Switch>
-
+        <div>
+          <Switch>
+            <Route exact path="/submit">
+              <SubmitQuestions />
+            </Route>
+          </Switch>
+        </div>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph />
