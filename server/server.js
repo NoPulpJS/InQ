@@ -3,8 +3,8 @@ const path = require('path');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const db = require('./data/models');
 const dotenv = require('dotenv');
+const db = require('./data/models');
 
 dotenv.config();
 
@@ -48,12 +48,10 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/getCategories', (req, res) => {
-  const query = {text: 'SELECT  * FROM categories'}
+  const query = { text: 'SELECT  * FROM categories' };
   db.query(query)
-    .then((data)=> {
-      return res.status(200).json(data.rows);
-    })
-})
+    .then((data) => res.status(200).json(data.rows));
+});
 
 app.use('*', (req, res) => {
   res.status(404).send('Not Found');
