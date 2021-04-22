@@ -12,6 +12,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+import Container from '@material-ui/core';
+import { sizing } from '@material-ui/system';
 import {
   HomeOutlined, Publish, FormatListBulleted,
 } from '@material-ui/icons';
@@ -25,7 +27,7 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import SubmitQuestions from './SubmitQuestions';
+import SubmitQuestion from './SubmitQuestion';
 
 const drawerWidth = 240;
 
@@ -51,6 +53,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
+  submitQuestionWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    height: '100vh',
+ 
+  },
+
 }));
 
 export default function PermanentDrawerLeft() {
@@ -102,7 +114,7 @@ export default function PermanentDrawerLeft() {
             <ListItemIcon>
               <Publish />
             </ListItemIcon>
-            <ListItemText primary="Submit Qestion" />
+            <ListItemText primary="Submit Question" />
           </ListItem>
 
           <ListItem button key="MessageBoard">
@@ -134,7 +146,9 @@ export default function PermanentDrawerLeft() {
       <div>
       <Switch>
         <Route exact path="/submit">
-          <SubmitQuestions />
+        <div className = {classes.submitQuestionWrapper}>
+          <SubmitQuestion height = '1000%' />
+          </div>
         </Route>
       </Switch>
       </div>

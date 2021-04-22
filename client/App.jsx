@@ -3,8 +3,9 @@ import {
   Switch, Route, Router, Link, useLocation,
 } from 'react-router-dom';
 import PersistentDrawer from './components/PersistentDrawer';
+import MainContainer from './components/MainContainer';
 import MessageBoard from './components/MessageBoard';
-import SubmitQuestions from './components/SubmitQuestions';
+import SubmitQuestions from './components/SubmitQuestion';
 // import MainContainer from './components/MainContainer';
 import Login from './components/Login';
 
@@ -18,7 +19,7 @@ class App extends Component {
             <Login />
           </Route>
           <Route exact path="/profile">
-            <PersistentDrawer />
+            <MainContainer />
           </Route>
         </Switch>
       </div>
