@@ -3,7 +3,7 @@ import {
   Switch, Route, Router, Link, useLocation,
 } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import SubmitQuestions from './SubmitQuestions';
+import SubmitQuestions from './SubmitQuestion';
 
 function Login(props) {
   const oAuthURL = '/login/OAuth/';

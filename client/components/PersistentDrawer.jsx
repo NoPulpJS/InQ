@@ -15,6 +15,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+import Container from '@material-ui/core';
+import { sizing } from '@material-ui/system';
 import {
   HomeOutlined, Publish, FormatListBulleted,
 } from '@material-ui/icons';
@@ -22,7 +24,7 @@ import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 import Fab from '@material-ui/core/Fab';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
-import SubmitQuestions from './SubmitQuestions';
+import SubmitQuestion from './SubmitQuestion';
 import MessageBoard from './MessageBoard';
 import CatagoryCheckboxList from './CategoryList';
 
@@ -50,6 +52,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
+  submitQuestionWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    height: '100vh',
+ 
+  },
+
 }));
 
 export default function PermanentDrawerLeft(props) {
@@ -117,6 +129,12 @@ export default function PermanentDrawerLeft(props) {
               <ListItemText primary="Favorites" />
             </ListItem>
 
+          <ListItem button key="SubmitQuestion" component={Link} to="/submit">
+            <ListItemIcon>
+              <Publish />
+            </ListItemIcon>
+            <ListItemText primary="Submit Question" />
+          </ListItem>
             <ListItem button key="SearchQuestions" component={Link} to="/checklist">
               <ListItemIcon>
                 <Fab size="large" color="primary" aria-label="search">
@@ -131,7 +149,7 @@ export default function PermanentDrawerLeft(props) {
         <div>
           <Switch>
             <Route exact path="/submit">
-              <SubmitQuestions />
+              <SubmitQuestion />
             </Route>
 
             {/* <Route exact path="/MessageBoard">
