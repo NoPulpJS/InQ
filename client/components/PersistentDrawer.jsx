@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PermanentDrawerLeft() {
+export default function PermanentDrawerLeft(props) {
   const [user, setUser] = useState({});
   const classes = useStyles();
 
@@ -131,7 +131,7 @@ export default function PermanentDrawerLeft() {
         </Drawer>
         <div>
           <Switch>
-            <Route exact path="/submit">
+            <Route path="/submit">
               <SubmitQuestions />
             </Route>
           </Switch>
