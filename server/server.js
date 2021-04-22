@@ -3,8 +3,9 @@ const path = require('path');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const db = require('./data/models');
 const dotenv = require('dotenv');
+const chalk = require('chalk');
+const db = require('./data/models');
 
 dotenv.config();
 
@@ -18,14 +19,16 @@ app.use(cookieParser());
 const loginRouter = require('./routes/login');
 const questionsRouter = require('./routes/questions');
 // controllers
-const authenticationController = (require('./controllers/authenticationController.js'));
+const authenticationController = require('./controllers/authenticationController.js');
 const infoController = require('./controllers/infoController.js');
 const { categories } = require('./controllers/questionsController');
 
-app.use(cookieSession({
-  name: 'session-name',
-  keys: ['key1', 'key2'],
-}));
+app.use(
+  cookieSession({
+    name: 'session-name',
+    keys: ['key1', 'key2'],
+  }),
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -33,13 +36,12 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../client/')));
 app.use('/login', loginRouter.router);
 app.use('/questions', questionsRouter.router);
-app.get('/profile',
-  authenticationController.checkUserLoggedIn,
-  (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
+app.get('/profile', authenticationController.checkUserLoggedIn, (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 
-app.get('/getUserInfo',
-  infoController.getUserInfo,
-  (req, res) => res.status(200).json(res.locals.userInfo));
+app.get('/getUserInfo', infoController.getUserInfo);
+app.get('/getCategories', infoController.getCategories);
+app.get('/getCompanies', infoController.getCompanies);
+
 
 app.get('/logout', (req, res) => {
   req.session = null;
@@ -47,14 +49,9 @@ app.get('/logout', (req, res) => {
   return res.redirect('/');
 });
 
-app.get('/getCategories', (req, res) => {
-  const query = {text: 'SELECT  * FROM categories'}
-  db.query(query)
-    .then((data)=> {
-      return res.status(200).json(data.rows);
-    })
-})
+//app.post('/Messages', infoController.postMessageBoard, (req, res) => console.log('end of chain'));
 
+app.use('/*', authenticationController.checkUserLoggedIn, (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 app.use('*', (req, res) => {
   res.status(404).send('Not Found');
 });

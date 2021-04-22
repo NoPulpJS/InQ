@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 -- add email to user details?
+--is this redundant
+CREATE TABLE public.messageBoard (
+  "_id" serial PRIMARY KEY,
+  "message" varchar NOT NULL,
+  "photo_url" varchar,
+  "user_name" varchar NOT NULL
+);
 
 CREATE TABLE public.users (
   "_id" serial,
@@ -59,6 +66,14 @@ CREATE TABLE public.categories_in_companies (
   "company_id" bigint NOT NULL,
   CONSTRAINT "categories_in_companies_pk" PRIMARY KEY ("_id")
 );
+
+CREATE TABLE public.messages (
+  "_id" serial,
+  "category_id" bigint NOT NULL,
+  "company_id" bigint NOT NULL,
+  CONSTRAINT "categories_in_companies_pk" PRIMARY KEY ("_id")
+);
+
 
 ALTER TABLE public.questions ADD CONSTRAINT "questions_fk0" FOREIGN KEY ("created_by") REFERENCES public.users("_id");
 

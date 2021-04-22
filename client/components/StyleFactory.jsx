@@ -1,6 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  createStyles,
+} from '@material-ui/core/styles';
 
-const useStylesMessage = makeStyles((theme) => ({
+export const useStylesMessage = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: '36ch',
@@ -11,7 +14,7 @@ const useStylesMessage = makeStyles((theme) => ({
   },
 }));
 
-const useStylesButton = makeStyles((theme) => ({
+export const useStylesButton = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
@@ -22,7 +25,7 @@ const useStylesButton = makeStyles((theme) => ({
   },
 }));
 
-const useStylesText = makeStyles((theme) => ({
+export const useStylesText = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
@@ -31,8 +34,20 @@ const useStylesText = makeStyles((theme) => ({
   },
 }));
 
-export {
-  useStylesMessage,
-  useStylesButton,
-  useStylesText,
-};
+export const useStylesCatagories = makeStyles((theme) => createStyles({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: 300,
+  },
+  listSection: {
+    backgroundColor: 'inherit',
+  },
+  ul: {
+    backgroundColor: 'inherit',
+    padding: 0,
+  },
+}));
