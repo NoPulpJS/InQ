@@ -27,9 +27,9 @@ export default function SubmitQuestions() {
   useEffect(() => {
     fetch('/getCategories')
       .then((categories) => categories.json())
-      .then((categories) => {
-        console.log('Categories: ', categories);
-        setCategories(categories);
+      .then((categoriesObj) => {
+        console.log('Categories: ', categoriesObj);
+        setCategories(categoriesObj);
       });
   }, []);
 

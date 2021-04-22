@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link,
+} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,13 +22,9 @@ import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 import Fab from '@material-ui/core/Fab';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-} from 'react-router-dom';
 import SubmitQuestions from './SubmitQuestions';
+import MessageBoard from './MessageBoard';
+import CatagoryCheckboxList from './CategoryList';
 
 const drawerWidth = 240;
 
@@ -73,7 +72,7 @@ export default function PermanentDrawerLeft(props) {
           <Toolbar>
             <Typography variant="h6" noWrap>
               {`Welcome back ${user.name}`}
-              <Avatar alt="Dw" src={user.photo} className={classes.large} />
+              <Avatar alt={user.name} src={user.photo} className={classes.large} />
             </Typography>
           </Toolbar>
         </AppBar>
@@ -88,7 +87,6 @@ export default function PermanentDrawerLeft(props) {
           <div className={classes.toolbar} />
           <Divider />
           <List>
-
             <ListItem button key="Home">
               <ListItemIcon>
                 <HomeOutlined />
@@ -103,7 +101,7 @@ export default function PermanentDrawerLeft(props) {
               <ListItemText primary="Submit Qestion" />
             </ListItem>
 
-            <ListItem button key="MessageBoard">
+            <ListItem button key="MessageBoard" component={Link} to="/MessageBoard">
               <ListItemIcon>
                 <FormatListBulleted />
               </ListItemIcon>
@@ -119,7 +117,7 @@ export default function PermanentDrawerLeft(props) {
               <ListItemText primary="Favorites" />
             </ListItem>
 
-            <ListItem button key="SearchQuestions">
+            <ListItem button key="SearchQuestions" component={Link} to="/checklist">
               <ListItemIcon>
                 <Fab size="large" color="primary" aria-label="search">
                   <SearchRoundedIcon />
@@ -127,12 +125,21 @@ export default function PermanentDrawerLeft(props) {
               </ListItemIcon>
               <ListItemText primary="Search Questions" />
             </ListItem>
+
           </List>
         </Drawer>
         <div>
           <Switch>
-            <Route path="/submit">
+            <Route exact path="/submit">
               <SubmitQuestions />
+            </Route>
+
+            {/* <Route exact path="/MessageBoard">
+              <MessageBoard />
+            </Route> */}
+
+            <Route exact path="/checklist">
+              <CatagoryCheckboxList />
             </Route>
           </Switch>
         </div>

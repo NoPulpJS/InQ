@@ -12,9 +12,9 @@ module.exports = {
       photo: photo_url,
       email,
     };
-    // console.log('res.locals: ', res.locals.userInfo)
     return res.status(200).json(res.locals.userInfo);
   },
+  
   getCategories: (req, res, next) => {
     const query = { text: 'SELECT * FROM categories' };
     db.query(query)
