@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { useStylesCatagories, useStylesGetQuestions } from './StyleFactory';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import Typography from '@material-ui/core/Typography'
 import SaveIcon from '@material-ui/icons/Save';
 
 
@@ -17,8 +18,9 @@ export default function CatagoryCheckboxList() {
   const catagoryClasses = useStylesCatagories();
   const questionsClasses = useStylesGetQuestions();
 
-  const [checked, setChecked] = React.useState([0]);
+  const [checked, setChecked] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     fetch('/getCategories')
@@ -44,6 +46,15 @@ export default function CatagoryCheckboxList() {
 
     setChecked(newChecked);
   };
+
+const arrayOfQuestions = [];
+
+// useEffect(() => {
+//   arrayOfQuestions = questions.map((obj) => {
+//     console.log(obj)
+//   })
+// }, questions)
+
  //capture where item was click
  //envoke method to select all from dB
 
@@ -85,17 +96,19 @@ export default function CatagoryCheckboxList() {
       <div>
         <Button
         onClick={() => {
+              setQuestions([]);
               const categoryID = {checked}
               fetch('/getQuestions', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body:  JSON.stringify(categoryID.checked[1]),
+                body:  JSON.stringify(categoryID.checked[0]),
               })
               .then(data => data.json())
                .then(questions => {
-                 console.log('retrieveQuestions : ',questions);
+                 console.log('retrieveQuestions : ', questions);
+                setQuestions(questions)
                });
             }}
           variant="contained"
@@ -106,6 +119,12 @@ export default function CatagoryCheckboxList() {
         >
           Get Questions
         </Button>
+      </div>
+      <div>
+        {questions.map((obj) => {
+        return <Typography align='center' gutterBottom key={obj._id}> {obj.question} </Typography>
+      }) 
+    }
       </div>
     </div>
   )};
