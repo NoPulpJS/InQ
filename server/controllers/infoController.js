@@ -2,7 +2,7 @@ const db = require('../data/models');
 
 module.exports = {
   getUserInfo: (req, res, next) => {
-    console.log('REQ.USER------', req.user);
+    // console.log('REQ.USER------', req.user);
     const {
       _id, name, photo_url, email,
     } = req.user;
@@ -41,5 +41,23 @@ module.exports = {
         });
       });
   },
+
+  getQuestions: (req, res, next)=>{
+    console.log('indise getQuestions', req.body)
+    const {_id }= req.body
+
+    const query = {
+        text: 'select * from questions_in_categories where category_id = $1 ',
+      values: [_id] 
+    };
+    db.query(query)
+      .then((data) => res.status(200).json(data.rows))
+      .catch((e) => {
+        next({
+          message: `Error with /getQuestion route: ${e}`,
+          error: e,
+        });
+      });
+  }
 
 };

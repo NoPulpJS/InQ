@@ -41,6 +41,8 @@ app.get('/profile', authenticationController.checkUserLoggedIn, (req, res) => re
 app.get('/getUserInfo', infoController.getUserInfo);
 app.get('/getCategories', infoController.getCategories);
 app.get('/getCompanies', infoController.getCompanies);
+app.post('/getQuestions', infoController.getQuestions
+);
 
 
 app.get('/logout', (req, res) => {

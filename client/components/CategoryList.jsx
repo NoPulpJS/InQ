@@ -53,6 +53,7 @@ export default function CatagoryCheckboxList() {
     return (
 
       <ListItem
+        id={value._id}
         key={`${value.category}${i}`}
         role={undefined}
         dense
@@ -83,6 +84,17 @@ export default function CatagoryCheckboxList() {
       </div>
       <div>
         <Button
+        onClick={() => {
+              const val = {checked}
+              console.log('on Click', val.checked[1]);
+              fetch('/getQuestions', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:  JSON.stringify(val.checked[1]),
+              });
+            }}
           variant="contained"
           color="primary"
           size="large"
