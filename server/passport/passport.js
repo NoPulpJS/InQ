@@ -34,10 +34,6 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 ((request, accessToken, refreshToken, profile, done) => {
-<<<<<<< HEAD
-  console.log('profile' , profile);
-  done(null, profile, accessToken);
-=======
   console.log('STRATEGY____________');
   const { displayName, email, photos } = profile;
   const findQuery = { 
@@ -68,5 +64,4 @@ passport.use(new GoogleStrategy({
   }).catch( e => {
     console.error(e)
   })
->>>>>>> 68bdada4990ed686a73e071216bd6e428b210d1a
 })));

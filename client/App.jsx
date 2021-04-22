@@ -19,7 +19,6 @@ class App extends Component {
           </Route>
           <Route exact path="/profile">
             <PersistentDrawer />
-
           </Route>
         </Switch>
       </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -26,7 +25,7 @@ export default function MessageBoard() {
       <List className={messageClasses.root}>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="PROPS: GOOGLE NAME" src="PROPS: GOOGLE IMAGE" />
+            <Avatar alt="PROPS:? or DB GOOGLE NAME" src="PROPS:? or DB GOOGLE IMAGE" />
           </ListItemAvatar>
           <ListItemText
             primary="PROPS: USER INPUT TEXT"
