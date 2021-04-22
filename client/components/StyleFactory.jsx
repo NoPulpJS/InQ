@@ -51,3 +51,9 @@ export const useStylesCatagories = makeStyles((theme) => createStyles({
     padding: 0,
   },
 }));
+
+export const useStylesGetQuestions = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));

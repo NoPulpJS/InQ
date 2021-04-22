@@ -4,12 +4,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import { useStylesCatagories } from './StyleFactory';
+import { useStylesCatagories, useStylesGetQuestions } from './StyleFactory';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import SaveIcon from '@material-ui/icons/Save';
+
+
 
 const chalk = require('chalk');
 
 export default function CatagoryCheckboxList() {
   const catagoryClasses = useStylesCatagories();
+  const questionsClasses = useStylesGetQuestions();
 
   const [checked, setChecked] = React.useState([0]);
   const [categories, setCategories] = useState([]);
@@ -38,14 +44,16 @@ export default function CatagoryCheckboxList() {
 
     setChecked(newChecked);
   };
-  // array passed into map should be changed
-  // ListItemText primary prop needs to change
+ //capture where item was click
+ //envoke method to select all from dB
 
   const categoryRendered = categories.map((value, i) => {
     const labelId = `checkbox-list-label-${value.category}`;
 
     return (
+
       <ListItem
+        id={value._id}
         key={`${value.category}${i}`}
         role={undefined}
         dense
@@ -63,8 +71,41 @@ export default function CatagoryCheckboxList() {
         </ListItemIcon>
         <ListItemText id={labelId} primary={value.category} />
       </ListItem>
+
     );
   });
 
-  return <List className={catagoryClasses.root}>{categoryRendered}</List>;
-}
+  return (    
+    <div>
+      <div>
+        <List className={catagoryClasses.root}>
+          {categoryRendered}        
+        </List>
+      </div>
+      <div>
+        <Button
+        onClick={() => {
+              const categoryID = {checked}
+              fetch('/getQuestions', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body:  JSON.stringify(categoryID.checked[1]),
+              })
+              .then(data => data.json())
+               .then(questions => {
+                 console.log('retrieveQuestions : ',questions);
+               });
+            }}
+          variant="contained"
+          color="primary"
+          size="large"
+          className={questionsClasses.button}
+          endIcon={<Icon>send</Icon>}
+        >
+          Get Questions
+        </Button>
+      </div>
+    </div>
+  )};
