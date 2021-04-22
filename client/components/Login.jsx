@@ -6,9 +6,7 @@ import Button from '@material-ui/core/Button';
 
 function Login(props) {
   const oAuthURL = '/login/OAuth/';
-
   return (
-
     <div className="oAuth">
       <a href={`${oAuthURL}`}>
       <Button variant="contained">Login</Button>
